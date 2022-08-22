@@ -2,11 +2,18 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: webpage-server
-  namespace: default
+name: webpage-server
+namespace: default
 spec:
   containers:
-  - image: nginx:1.15
-    name: nginx
-    port: 80
-    # hostPort: 
+    - name: nginx
+      image: nginx:1.15
+      port: 80
+      volumeMounts:
+        - mountPath: "/var/www/html"
+          name: mypd
+  volumes:
+    - name: mypd
+      persistentVolumeClaim:
+        claimName: myclaim
+#  TODO PV = webpage
